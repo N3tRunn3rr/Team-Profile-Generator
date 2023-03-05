@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/N3tRunn3rr/Team-Profile-Generator#readme",
   "dependencies": {
+    "htmlgen": "^0.0.3",
     "jest": "^29.4.3",
     "save-dev": "^0.0.1-security"
   }
