@@ -79,7 +79,7 @@ function newEmployee() {
         console.log(intern)
         })
     } else if (answer.role === 'Manager') {
-        inquirer.prompt([
+        return inquirer.prompt([
             {
                 type: 'input',
                 name: 'name',
@@ -103,17 +103,38 @@ function newEmployee() {
     ]).then((data) => {
         const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
         employees.push(manager);
-        console.log(manager)
+        console.log(employees)
         })
     }
 }).then((data) => {
     // const employee = new Employee(data);
     // const htmlInfo = generateHTML(data);
-    fs.writeFile('./output.html', generateHTML(data),  (err) =>
-    err ? console.log(err) : console.log('Success!')
-    );
+    // fs.writeFileSync('./dist/output.html', generateHTML(data),  (err) =>
+    // err ? console.log(err) : console.log('Success!')
+    buildHtml(data);
     employees.push(data);
     console.log(JSON.stringify(employees));
+    return `<!DOCTYPE html>
+<html lang = "en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Profile</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<h1>My Team</h1>
+</header>
+<div class="main-container">
+<div class="row justify-content-center">
+${generateHTML(data)}
+</div>
+</div>
+</body>
+</html>`;
 })
 }
 
@@ -121,76 +142,45 @@ function generateHTML() {
     let html = '';
     if (constructor.name === 'Manager') {
             html += 
-  `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Employee Profile</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${name}</h1>
-    <p class="lead">My work id is: ${id}.</p>
+  `<div class="container">
+    <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
+    <p class="lead">My work id is: ${constructor.getId()}.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
-      <li class="list-group-item">My email is ${email}</li>
-      <li class="list-group-item">My Office Number Is: ${officeNumber}</li>
+      <li class="list-group-item">My email is ${constructor.getEmail()}</li>
+      <li class="list-group-item">My Office Number Is: ${constructor.getOfficeNumber()}</li>
     </ul>
-  </div>
-</div>
-</body>
-</html>`;
+  </div>`;
 } else if (constructor.role === 'Engineer') {
-    html += `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-      <title>Employee Profile</title>
-    </head>
-    <body>
-      <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">Hi! My name is ${name}</h1>
-        <p class="lead">My work id is: ${id}.</p>
+    html += 
+    `<div class="container">
+        <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
+        <p class="lead">My work id is: ${constructor.getId()}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${email}</li>
-          <li class="list-group-item">My github is: ${github}</li>
+          <li class="list-group-item">My email is ${constructor.getEmail()}</li>
+          <li class="list-group-item">My github is: ${constructor.getGithub()}</li>
         </ul>
-      </div>
-    </div>
-    </body>
-    </html>`;
+    </div>`;
 } else if (constructor.role === 'Intern') {
-    html += `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-      <title>Employee Profile</title>
-    </head>
-    <body>
-      <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">Hi! My name is ${name}</h1>
-        <p class="lead">My work id is: ${id}.</p>
+    html += 
+    `<div class="container">
+        <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
+        <p class="lead">My work id is: ${constructor.getId()}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${email}</li>
-          <li class="list-group-item">My School Is: ${school}</li>
+          <li class="list-group-item">My email is ${constructor.getEmail()}</li>
+          <li class="list-group-item">My School Is: ${constructor.getSchool()}</li>
         </ul>
-      </div>
-    </div>
-    </body>
-    </html>`;
+    </div>`;
 }
 return html;
+}
+
+function buildHtml() {
+    fs.writeFileSync('./dist/output.html', generateHTML(), (err) =>
+    err ? console.log(err) : console.log('Success!')
+    );
 }
 
 
