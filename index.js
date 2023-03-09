@@ -108,12 +108,13 @@ function newEmployee() {
     }
 }).then((data) => {
     const htmlPageContent = generateHTML(data);
-    fs.writeFile('index.html', htmlPageContent, (err) =>
-    err ? console.log(err) : console.log('Success!')
-    );
+    console.log('htmlPageContent output: ' + htmlPageContent)
     employees.push(data);
-    JSON.stringify(employees);
-    console.log(employees);
+    console.log(JSON.stringify(employees));
+    writeToFile('index.html', htmlPageContent);
+})
+};
+
 //     return `<!DOCTYPE html>
 // <html lang = "en">
 // <head>
@@ -135,8 +136,6 @@ function newEmployee() {
 // </div>
 // </body>
 // </html>`;
-})
-}
 
 function generateHTML() {
     let html = '';
@@ -154,16 +153,15 @@ function generateHTML() {
   </head>
   <body>
   <div class="container">
-    <h1 class="display-4">Hi! My name is ${data.getName()}</h1>
-    <p class="lead">My work id is: ${data.getId()}.</p>
+    <h1 class="display-4">Hi! My name is ${data.name}</h1>
+    <p class="lead">My work id is: ${data.id}.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
-      <li class="list-group-item">My email is ${data.getEmail()}</li>
-      <li class="list-group-item">My Office Number Is: ${data.getOfficeNumber()}</li>
+      <li class="list-group-item">My email is ${data.email}</li>
+      <li class="list-group-item">My Office Number Is: ${data.getOfficeNumber}</li>
     </ul>
   </div>
   </body>`;
-  console.log(constructor.role);
 } else if (constructor.role === 'Engineer') {
     html += 
     `<!DOCTYPE html>
@@ -178,16 +176,15 @@ function generateHTML() {
     </head>
     <body>
     <div class="container">
-        <h1 class="display-4">Hi! My name is ${data.getName()}</h1>
-        <p class="lead">My work id is: ${data.getId()}.</p>
+        <h1 class="display-4">Hi! My name is ${data.name}</h1>
+        <p class="lead">My work id is: ${data.id}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${data.getEmail()}</li>
-          <li class="list-group-item">My github is: ${data.getGithub()}</li>
+          <li class="list-group-item">My email is ${data.email}</li>
+          <li class="list-group-item">My github is: ${data.github}</li>
         </ul>
     </div>
     </body>`;
-    console.log(constructor.role);
 } else if (constructor.role === 'Intern') {
     html += 
     `<!DOCTYPE html>
@@ -202,19 +199,24 @@ function generateHTML() {
     </head>
     <body>
     <div class="container">
-        <h1 class="display-4">Hi! My name is ${data.getName()}</h1>
-        <p class="lead">My work id is: ${data.getId()}.</p>
+        <h1 class="display-4">Hi! My name is ${data.name}</h1>
+        <p class="lead">My work id is: ${data.id}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${data.getEmail()}</li>
-          <li class="list-group-item">My School Is: ${data.getSchool()}</li>
+          <li class="list-group-item">My email is ${data.email}</li>
+          <li class="list-group-item">My School Is: ${data.school}</li>
         </ul>
     </div>
     </body>`;
-    console.log(constructor.role);
 }
 console.log('html that was generated: ' + html);
 return html;
+}
+
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) => 
+        err ? console.log(err) : console.log('Successfully created HTML file!')
+        )
 }
 
 
