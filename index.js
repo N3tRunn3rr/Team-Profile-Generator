@@ -107,83 +107,115 @@ function newEmployee() {
         })
     }
 }).then((data) => {
-    // const employee = new Employee(data);
-    // const htmlInfo = generateHTML(data);
-    // fs.writeFileSync('./dist/output.html', generateHTML(data),  (err) =>
-    // err ? console.log(err) : console.log('Success!')
-    buildHtml(data);
+    const htmlPageContent = generateHTML(data);
+    fs.writeFile('index.html', htmlPageContent, (err) =>
+    err ? console.log(err) : console.log('Success!')
+    );
     employees.push(data);
-    console.log(JSON.stringify(employees));
-    return `<!DOCTYPE html>
-<html lang = "en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team Profile</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header>
-<h1>My Team</h1>
-</header>
-<div class="main-container">
-<div class="row justify-content-center">
-${generateHTML(data)}
-</div>
-</div>
-</body>
-</html>`;
+    JSON.stringify(employees);
+    console.log(employees);
+//     return `<!DOCTYPE html>
+// <html lang = "en">
+// <head>
+// <meta charset="UTF-8">
+// <meta http-equiv="X-UA-Compatible" content="IE=edge">
+// <meta name="viewport" content="width=device-width, initial-scale=1.0">
+// <title>Team Profile</title>
+// <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+// <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+// <header>
+// <h1>My Team</h1>
+// </header>
+// <div class="main-container">
+// <div class="row justify-content-center">
+// ${generateHTML(data)}
+// </div>
+// </div>
+// </body>
+// </html>`;
 })
 }
 
 function generateHTML() {
     let html = '';
-    if (constructor.name === 'Manager') {
+    if (constructor.role === 'Manager') {
             html += 
-  `<div class="container">
-    <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
-    <p class="lead">My work id is: ${constructor.getId()}.</p>
+  `<!DOCTYPE html>
+  <html lang = "en">
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Profile</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  <div class="container">
+    <h1 class="display-4">Hi! My name is ${data.getName()}</h1>
+    <p class="lead">My work id is: ${data.getId()}.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
-      <li class="list-group-item">My email is ${constructor.getEmail()}</li>
-      <li class="list-group-item">My Office Number Is: ${constructor.getOfficeNumber()}</li>
+      <li class="list-group-item">My email is ${data.getEmail()}</li>
+      <li class="list-group-item">My Office Number Is: ${data.getOfficeNumber()}</li>
     </ul>
-  </div>`;
+  </div>
+  </body>`;
+  console.log(constructor.role);
 } else if (constructor.role === 'Engineer') {
     html += 
-    `<div class="container">
-        <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
-        <p class="lead">My work id is: ${constructor.getId()}.</p>
+    `<!DOCTYPE html>
+    <html lang = "en">
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <div class="container">
+        <h1 class="display-4">Hi! My name is ${data.getName()}</h1>
+        <p class="lead">My work id is: ${data.getId()}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${constructor.getEmail()}</li>
-          <li class="list-group-item">My github is: ${constructor.getGithub()}</li>
+          <li class="list-group-item">My email is ${data.getEmail()}</li>
+          <li class="list-group-item">My github is: ${data.getGithub()}</li>
         </ul>
-    </div>`;
+    </div>
+    </body>`;
+    console.log(constructor.role);
 } else if (constructor.role === 'Intern') {
     html += 
-    `<div class="container">
-        <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
-        <p class="lead">My work id is: ${constructor.getId()}.</p>
+    `<!DOCTYPE html>
+    <html lang = "en">
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <div class="container">
+        <h1 class="display-4">Hi! My name is ${data.getName()}</h1>
+        <p class="lead">My work id is: ${data.getId()}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${constructor.getEmail()}</li>
-          <li class="list-group-item">My School Is: ${constructor.getSchool()}</li>
+          <li class="list-group-item">My email is ${data.getEmail()}</li>
+          <li class="list-group-item">My School Is: ${data.getSchool()}</li>
         </ul>
-    </div>`;
+    </div>
+    </body>`;
+    console.log(constructor.role);
 }
+console.log('html that was generated: ' + html);
 return html;
 }
-
-function buildHtml() {
-    fs.writeFileSync('./dist/output.html', generateHTML(), (err) =>
-    err ? console.log(err) : console.log('Success!')
-    );
-}
-
-
 
 
 init();
