@@ -7,6 +7,8 @@ const Manager = require('./lib/Manager');
 // const Employee = require('./lib/Employee');
 const employees = [];
 
+//TODO: get output to display in html file. only console logs the array of objects right now
+
 //node index.js runs the first question but errors out after you give it a name
 
 function init() {
@@ -19,7 +21,7 @@ function newEmployee() {
         type: 'list',
         name: 'role',
         message: 'What is your role?',
-        choices: ['Engineer', 'Intern', 'Manager'],
+        choices: ['Engineer', 'Intern', 'Manager', 'None'],
     }
 ]).then((answer) => {
     if (answer.role === 'Engineer') { 
@@ -47,9 +49,10 @@ function newEmployee() {
             },
         ])
         .then((data) => {
-        const engineer = new Engineer(data.name, data.id, data.email, data.github);
-        employees.push(engineer);
-        console.log(engineer)
+            const engineer = new Engineer(data.name, data.id, data.email, data.github);
+            employees.push(engineer);
+            console.log("Team: ", employees)
+            newEmployee()
         });
     } else if (answer.role === 'Intern') {
         return inquirer.prompt([
@@ -106,8 +109,12 @@ function newEmployee() {
         console.log(employees)
         })
     }
+    // return answer;
 }).then((data) => {
-    const htmlPageContent = generateHTML(data);
+    console.log("Data: ", data);
+    console.log("Team: ", employees);
+
+    const htmlPageContent = generateHTML(employees);
     console.log('htmlPageContent output: ' + htmlPageContent)
     employees.push(data);
     console.log(JSON.stringify(employees));
@@ -115,31 +122,10 @@ function newEmployee() {
 })
 };
 
-//     return `<!DOCTYPE html>
-// <html lang = "en">
-// <head>
-// <meta charset="UTF-8">
-// <meta http-equiv="X-UA-Compatible" content="IE=edge">
-// <meta name="viewport" content="width=device-width, initial-scale=1.0">
-// <title>Team Profile</title>
-// <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-// <link rel="stylesheet" href="style.css">
-// </head>
-// <body>
-// <header>
-// <h1>My Team</h1>
-// </header>
-// <div class="main-container">
-// <div class="row justify-content-center">
-// ${generateHTML(data)}
-// </div>
-// </div>
-// </body>
-// </html>`;
 
-function generateHTML() {
-    let html = '';
-    if (constructor.role === 'Manager') {
+function generateHTML(data) {
+    let html = 'EMPTY';
+    if (data[0].role === 'Manager') {
             html += 
   `<!DOCTYPE html>
   <html lang = "en">
@@ -162,7 +148,7 @@ function generateHTML() {
     </ul>
   </div>
   </body>`;
-} else if (constructor.role === 'Engineer') {
+} else if (data[0].role === 'Engineer') {
     html += 
     `<!DOCTYPE html>
     <html lang = "en">
@@ -185,7 +171,7 @@ function generateHTML() {
         </ul>
     </div>
     </body>`;
-} else if (constructor.role === 'Intern') {
+} else if (data[0].role === 'Intern') {
     html += 
     `<!DOCTYPE html>
     <html lang = "en">
@@ -199,12 +185,12 @@ function generateHTML() {
     </head>
     <body>
     <div class="container">
-        <h1 class="display-4">Hi! My name is ${data.name}</h1>
-        <p class="lead">My work id is: ${data.id}.</p>
+        <h1 class="display-4">Hi! My name is ${data[0].name}</h1>
+        <p class="lead">My work id is: ${data[0].id}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${data.email}</li>
-          <li class="list-group-item">My School Is: ${data.school}</li>
+          <li class="list-group-item">My email is ${data[0].email}</li>
+          <li class="list-group-item">My School Is: ${data[0].school}</li>
         </ul>
     </div>
     </body>`;
