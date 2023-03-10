@@ -12,8 +12,9 @@ const employees = [];
 //node index.js runs the first question but errors out after you give it a name
 
 function init() {
-        return newEmployee();
-}
+        newEmployee();
+        return;
+};
 
 function newEmployee() {
     inquirer.prompt([
@@ -23,39 +24,52 @@ function newEmployee() {
         message: 'What is your role?',
         choices: ['Engineer', 'Intern', 'Manager', 'None'],
     }
-]).then((answer) => {
-    if (answer.role === 'Engineer') { 
-            return inquirer.prompt([
-            {
-            
-                type: 'input',
-                name: 'name',
-                message: 'What is your name?',
-            },
-            {
-                type: 'input',
-                name: 'id',
-                message: 'What is your ID?',
-            },
-            {
-                type: 'input',
-                name: 'email',
-                message: 'What is your email?',
-            },
-            {
+]).then((data) => {
+    if (data.role === 'Engineer') {
+        newEngineer(data);
+    } else if (data.role === 'Intern') {
+        newIntern(data);
+    } else if (data.role === 'Manager') {
+        newManager(data);
+    } else if (data.role === 'None') {
+        console.log("Team: ", employees);
+        return;
+}
+});
+
+function newEngineer(data) {
+        inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'What is your name?',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'What is your ID?',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'What is your email?',
+        },
+        {
             type: 'input',
             name: 'github',
             message: 'What is your GitHub username?',
-            },
-        ])
-        .then((data) => {
-            const engineer = new Engineer(data.name, data.id, data.email, data.github);
-            employees.push(engineer);
-            console.log("Team: ", employees)
-            newEmployee()
-        });
-    } else if (answer.role === 'Intern') {
-        return inquirer.prompt([
+        },
+    ]) .then((data) => {
+        const engineer = new Engineer(data.name, data.id, data.email, data.github);
+        employees.push(engineer);
+        console.log("Team: ", employees)
+        assembleTeam(employees);
+        newEmployee();
+    });
+    }
+
+    function newIntern(data) {
+        inquirer.prompt([
         {
             type: 'input',
             name: 'name',
@@ -76,56 +90,59 @@ function newEmployee() {
             name: 'school',
             message: 'What school do you attend?',
         },
-    ]).then((data) => {
+    ]) .then((data) => {
         const intern = new Intern(data.name, data.id, data.email, data.school);
         employees.push(intern);
-        console.log(intern)
-        })
-    } else if (answer.role === 'Manager') {
-        return inquirer.prompt([
-            {
-                type: 'input',
-                name: 'name',
-                message: 'What is your name?',
-            },
-            {
-                type: 'input',
-                name: 'id',
-                message: 'What is your ID?',
-            },
-            {
-                type: 'input',
-                name: 'email',
-                message: 'What is your email?',
-            },
-            {
+        console.log("Team: ", employees)
+        assembleTeam(employees);
+        newEmployee();
+        });
+    }
+    
+    function newManager(data) {
+        inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'What is your name?',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'What is your ID?',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'What is your email?',
+        },
+        {
             type: 'input',
             name: 'officeNumber',
             message: 'What is your office number?',
-        }
-    ]).then((data) => {
+        },
+    ]) .then((data) => {
         const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
         employees.push(manager);
-        console.log(employees)
-        })
+        console.log("Team: ", employees);
+        assembleTeam(employees);
+        newEmployee();
+    });
     }
     // return answer;
-}).then((data) => {
-    console.log("Data: ", data);
-    console.log("Team: ", employees);
+};
 
+function assembleTeam(employees) {
+    console.log("Assembled Team: ", JSON.stringify(employees));
     const htmlPageContent = generateHTML(employees);
-    console.log('htmlPageContent output: ' + htmlPageContent)
-    employees.push(data);
-    console.log(JSON.stringify(employees));
+    console.log('html function output: ' + htmlPageContent)
     writeToFile('index.html', htmlPageContent);
-})
 };
 
 
-function generateHTML(data) {
+function generateHTML(employees) {
     let html = 'EMPTY';
-    if (data[0].role === 'Manager') {
+    if (employees.role === 'Manager') {
             html += 
   `<!DOCTYPE html>
   <html lang = "en">
@@ -148,7 +165,7 @@ function generateHTML(data) {
     </ul>
   </div>
   </body>`;
-} else if (data[0].role === 'Engineer') {
+} else if (employees.role === 'Engineer') {
     html += 
     `<!DOCTYPE html>
     <html lang = "en">
@@ -171,7 +188,7 @@ function generateHTML(data) {
         </ul>
     </div>
     </body>`;
-} else if (data[0].role === 'Intern') {
+} else if (employees.role === 'Intern') {
     html += 
     `<!DOCTYPE html>
     <html lang = "en">
