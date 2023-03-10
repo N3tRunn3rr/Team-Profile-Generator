@@ -12,8 +12,7 @@ const employees = [];
 //node index.js runs the first question but errors out after you give it a name
 
 function init() {
-        newEmployee();
-        return;
+        return newManager();
 };
 
 function newEmployee() {
@@ -21,17 +20,17 @@ function newEmployee() {
     {
         type: 'list',
         name: 'role',
-        message: 'What is your role?',
-        choices: ['Engineer', 'Intern', 'Manager', 'None'],
+        message: 'What is role do you want to add?',
+        choices: ['Engineer', 'Intern', 'Finish'],
     }
 ]).then((data) => {
     if (data.role === 'Engineer') {
         newEngineer(data);
     } else if (data.role === 'Intern') {
         newIntern(data);
-    } else if (data.role === 'Manager') {
-        newManager(data);
-    } else if (data.role === 'None') {
+    // } else if (data.role === 'Manager') {
+    //     newManager(data);
+    } else if (data.role === 'Finish') {
         console.log("Team: ", employees);
         return;
 }
@@ -66,9 +65,10 @@ function newEngineer(data) {
         assembleTeam(employees);
         newEmployee();
     });
-    }
+    };
+};
 
-    function newIntern(data) {
+function newIntern(data) {
         inquirer.prompt([
         {
             type: 'input',
@@ -97,9 +97,9 @@ function newEngineer(data) {
         assembleTeam(employees);
         newEmployee();
         });
-    }
-    
-    function newManager(data) {
+    };
+
+function newManager() {
         inquirer.prompt([
         {
             type: 'input',
@@ -127,9 +127,8 @@ function newEngineer(data) {
         console.log("Team: ", employees);
         assembleTeam(employees);
         newEmployee();
+        
     });
-    }
-    // return answer;
 };
 
 function assembleTeam(employees) {
