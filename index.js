@@ -36,6 +36,8 @@ function newEmployee() {
 }
 });
 
+//TODO: this returns an array of objects but I need to call the object by the class name for the html function
+
 function newEngineer(data) {
         inquirer.prompt([
         {
@@ -62,7 +64,7 @@ function newEngineer(data) {
         const engineer = new Engineer(data.name, data.id, data.email, data.github);
         employees.push(engineer);
         console.log("Team: ", employees)
-        assembleTeam(employees);
+        assembleTeam(engineer);
         newEmployee();
     });
     };
@@ -94,7 +96,7 @@ function newIntern(data) {
         const intern = new Intern(data.name, data.id, data.email, data.school);
         employees.push(intern);
         console.log("Team: ", employees)
-        assembleTeam(employees);
+        assembleTeam(intern);
         newEmployee();
         });
     };
@@ -125,13 +127,13 @@ function newManager() {
         const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
         employees.push(manager);
         console.log("Team: ", employees);
-        assembleTeam(employees);
+        assembleTeam(manager);
         newEmployee();
         
     });
 };
 
-function assembleTeam(employees) {
+function assembleTeam() {
     console.log("Assembled Team: ", JSON.stringify(employees));
     const htmlPageContent = generateHTML(employees);
     console.log('html function output: ' + htmlPageContent)
@@ -141,7 +143,7 @@ function assembleTeam(employees) {
 
 function generateHTML(employees) {
     let html = 'EMPTY';
-    if (employees.role === 'Manager') {
+    if (employees[i].role === 'Manager') {
             html += 
   `<!DOCTYPE html>
   <html lang = "en">
@@ -155,16 +157,16 @@ function generateHTML(employees) {
   </head>
   <body>
   <div class="container">
-    <h1 class="display-4">Hi! My name is ${data.name}</h1>
-    <p class="lead">My work id is: ${data.id}.</p>
+    <h1 class="display-4">Hi! My name is ${construtor.getName()}</h1>
+    <p class="lead">My work id is: ${constructor.getId()}.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
-      <li class="list-group-item">My email is ${data.email}</li>
-      <li class="list-group-item">My Office Number Is: ${data.getOfficeNumber}</li>
+      <li class="list-group-item">My email is ${constructor.getEmail()}</li>
+      <li class="list-group-item">My Office Number Is: ${constructor.getOfficeNumber()}</li>
     </ul>
   </div>
   </body>`;
-} else if (employees.role === 'Engineer') {
+} else if (constructor.role === 'Engineer') {
     html += 
     `<!DOCTYPE html>
     <html lang = "en">
@@ -178,16 +180,16 @@ function generateHTML(employees) {
     </head>
     <body>
     <div class="container">
-        <h1 class="display-4">Hi! My name is ${data.name}</h1>
-        <p class="lead">My work id is: ${data.id}.</p>
+        <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
+        <p class="lead">My work id is: ${constructor.getId()}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${data.email}</li>
-          <li class="list-group-item">My github is: ${data.github}</li>
+          <li class="list-group-item">My email is ${constructor.getEmail()}</li>
+          <li class="list-group-item">My github is: ${constructor.getGithub()}</li>
         </ul>
     </div>
     </body>`;
-} else if (employees.role === 'Intern') {
+} else if (constructor.role === 'Intern') {
     html += 
     `<!DOCTYPE html>
     <html lang = "en">
@@ -201,19 +203,21 @@ function generateHTML(employees) {
     </head>
     <body>
     <div class="container">
-        <h1 class="display-4">Hi! My name is ${data[0].name}</h1>
-        <p class="lead">My work id is: ${data[0].id}.</p>
+        <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
+        <p class="lead">My work id is: ${constructor.getId()}.</p>
         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
         <ul class="list-group">
-          <li class="list-group-item">My email is ${data[0].email}</li>
-          <li class="list-group-item">My School Is: ${data[0].school}</li>
+          <li class="list-group-item">My email is ${constructor.getEmail()}</li>
+          <li class="list-group-item">My School Is: ${constructor.getSchool()}</li>
         </ul>
     </div>
     </body>`;
 }
 console.log('html that was generated: ' + html);
 return html;
-}
+};
+
+
 
 function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, (err) => 
