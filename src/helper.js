@@ -1,82 +1,60 @@
+const index = require('../index');
 
+function generateHtml(employees) {
+    let html = '';
+    employees.forEach((teamMember) => {
+    if (teamMember.constructor.role === 'Manager') {
+            html += 
+  `<div class="card">
+    <div class="card-title">${teamMember.getRole()}<br>${teamMember.getName()}</div>
+        <ul class="card-list">
+            <li>ID: ${teamMember.getId()}</li>
+            <li>Email: ${teamMember.getEmail()}</li>
+            <li>Office Number: ${teamMember.getOfficeNumber()}</li>
+        </ul>
+    </div>`
+      ;
+}
+    if (teamMember.constructor.role === 'Engineer') {
+    html += 
+    `<div class="card">
+    <div class="card-title">${teamMember.getRole()}<br>${teamMember.getName()}</div>
+        <ul class="card-list">
+            <li>ID: ${teamMember.getId()}</li>
+            <li>Email: ${teamMember.getEmail()}</li>
+            <li>GitHub: ${teamMember.getGithub()}</li>
+        </ul>
+    </div>`
+  ;
+} 
+    if (teamMember.constructor.role === 'Intern') {
+    html += 
+    `<div class="card">
+    <div class="card-title">${teamMember.getRole()}<br>${teamMember.getName()}</div>
+        <ul class="card-list">
+            <li>ID: ${teamMember.getId()}</li>
+            <li>Email: ${teamMember.getEmail()}</li>
+            <li>School: ${teamMember.getSchool()}</li>
+        </ul>
+    </div>`
+  ;
+}
+});
+console.log('rendered html: ', html);
+return html;
+}
 
-// function generateHTML() {
-//     let html = '';
-//     if (role === 'Manager') {
-//             html += 
-//   `<!DOCTYPE html>
-// <html lang="en">
-// <head>
-//   <meta charset="UTF-8">
-//   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-//   <title>Employee Profile</title>
-// </head>
-// <body>
-//   <div class="jumbotron jumbotron-fluid">
-//   <div class="container">
-//     <h1 class="display-4">Hi! My name is ${name}</h1>
-//     <p class="lead">My work id is: ${id}.</p>
-//     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-//     <ul class="list-group">
-//       <li class="list-group-item">My email is ${email}</li>
-//       <li class="list-group-item">My Office Number Is: ${officeNumber}</li>
-//     </ul>
-//   </div>
-// </div>
-// </body>
-// </html>`;
-// } else if (role === 'Engineer') {
-//     html += `<!DOCTYPE html>
-//     <html lang="en">
-//     <head>
-//       <meta charset="UTF-8">
-//       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-//       <title>Employee Profile</title>
-//     </head>
-//     <body>
-//       <div class="jumbotron jumbotron-fluid">
-//       <div class="container">
-//         <h1 class="display-4">Hi! My name is ${name}</h1>
-//         <p class="lead">My work id is: ${id}.</p>
-//         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-//         <ul class="list-group">
-//           <li class="list-group-item">My email is ${email}</li>
-//           <li class="list-group-item">My github is: ${github}</li>
-//         </ul>
-//       </div>
-//     </div>
-//     </body>
-//     </html>`;
-// } else if (role === 'Intern') {
-//     html += `<!DOCTYPE html>
-//     <html lang="en">
-//     <head>
-//       <meta charset="UTF-8">
-//       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-//       <title>Employee Profile</title>
-//     </head>
-//     <body>
-//       <div class="jumbotron jumbotron-fluid">
-//       <div class="container">
-//         <h1 class="display-4">Hi! My name is ${name}</h1>
-//         <p class="lead">My work id is: ${id}.</p>
-//         <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-//         <ul class="list-group">
-//           <li class="list-group-item">My email is ${email}</li>
-//           <li class="list-group-item">My School Is: ${school}</li>
-//         </ul>
-//       </div>
-//     </div>
-//     </body>
-//     </html>`;
-// }
-// return html;
-// }
-
-
-
-
-// module.exports = generateHTML;
+module.exports = (employees) => {
+    return `<!DOCTYPE html>
+    <html>
+      <head>
+        <title>Current Team</title>
+        <link rel="stylesheet" href="style.css">
+      </head>
+      <body>
+            <div class="card-container">
+                ${generateHtml(employees)}
+            </div>
+      </body>
+    </html>`;
+  };

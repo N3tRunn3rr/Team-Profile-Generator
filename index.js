@@ -3,13 +3,10 @@ const fs = require('fs');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-// const generateHTML = require('./src/helper');
-// const Employee = require('./lib/Employee');
+const generateHtml = require('./src/helper');
+const Employee = require('./lib/Employee');
 const employees = [];
 
-//TODO: get output to display in html file. only console logs the array of objects right now
-
-//node index.js runs the first question but errors out after you give it a name
 
 function init() {
         return newManager();
@@ -28,17 +25,15 @@ function newEmployee() {
         newEngineer(data);
     } else if (data.role === 'Intern') {
         newIntern(data);
-    // } else if (data.role === 'Manager') {
-    //     newManager(data);
     } else if (data.role === 'Finish') {
         console.log("Team: ", employees);
+        assembleTeam((employees));
         return;
 }
 });
 
-//TODO: this returns an array of objects but I need to call the object by the class name for the html function
 
-function newEngineer(data) {
+function newEngineer() {
         inquirer.prompt([
         {
             type: 'input',
@@ -64,13 +59,13 @@ function newEngineer(data) {
         const engineer = new Engineer(data.name, data.id, data.email, data.github);
         employees.push(engineer);
         console.log("Team: ", employees)
-        assembleTeam(engineer);
+        // assembleTeam(JSON.stringify(employees));
         newEmployee();
     });
     };
 };
 
-function newIntern(data) {
+function newIntern() {
         inquirer.prompt([
         {
             type: 'input',
@@ -96,7 +91,7 @@ function newIntern(data) {
         const intern = new Intern(data.name, data.id, data.email, data.school);
         employees.push(intern);
         console.log("Team: ", employees)
-        assembleTeam(intern);
+        // assembleTeam(JSON.stringify(employees));
         newEmployee();
         });
     };
@@ -127,103 +122,27 @@ function newManager() {
         const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
         employees.push(manager);
         console.log("Team: ", employees);
-        assembleTeam(manager);
+        // assembleTeam(JSON.stringify(employees));
         newEmployee();
         
     });
 };
 
 function assembleTeam() {
-    console.log("Assembled Team: ", JSON.stringify(employees));
-    const htmlPageContent = generateHTML(employees);
-    console.log('html function output: ' + htmlPageContent)
-    writeToFile('index.html', htmlPageContent);
-};
-
-
-function generateHTML(employees) {
-    let html = 'EMPTY';
-    if (employees[i].role === 'Manager') {
-            html += 
-  `<!DOCTYPE html>
-  <html lang = "en">
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Team Profile</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${construtor.getName()}</h1>
-    <p class="lead">My work id is: ${constructor.getId()}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My email is ${constructor.getEmail()}</li>
-      <li class="list-group-item">My Office Number Is: ${constructor.getOfficeNumber()}</li>
-    </ul>
-  </div>
-  </body>`;
-} else if (constructor.role === 'Engineer') {
-    html += 
-    `<!DOCTYPE html>
-    <html lang = "en">
-    <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Profile</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-    <div class="container">
-        <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
-        <p class="lead">My work id is: ${constructor.getId()}.</p>
-        <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-        <ul class="list-group">
-          <li class="list-group-item">My email is ${constructor.getEmail()}</li>
-          <li class="list-group-item">My github is: ${constructor.getGithub()}</li>
-        </ul>
-    </div>
-    </body>`;
-} else if (constructor.role === 'Intern') {
-    html += 
-    `<!DOCTYPE html>
-    <html lang = "en">
-    <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Profile</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-    <div class="container">
-        <h1 class="display-4">Hi! My name is ${constructor.getName()}</h1>
-        <p class="lead">My work id is: ${constructor.getId()}.</p>
-        <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-        <ul class="list-group">
-          <li class="list-group-item">My email is ${constructor.getEmail()}</li>
-          <li class="list-group-item">My School Is: ${constructor.getSchool()}</li>
-        </ul>
-    </div>
-    </body>`;
+    fs.writeFileSync('./dist/output.html', generateHtml(employees), 'utf-8');
+    console.log("Team used to generate html:  ", JSON.stringify(employees));
 }
-console.log('html that was generated: ' + html);
-return html;
-};
+    // console.log("Assembled Team: ", JSON.stringify(employees));
+    // const htmlPageContent = generateHTML(employees);
+    // console.log('html function output: ' + htmlPageContent)
+    // writeToFile('index.html', htmlPageContent);
 
 
+// function writeToFile(fileName, data) {
+//     fs.writeFile(fileName, data, (err) => 
+//         err ? console.log(err) : console.log('Successfully created HTML file!')
+//         )
+// }
 
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, (err) => 
-        err ? console.log(err) : console.log('Successfully created HTML file!')
-        )
-}
-
-
+//TODO: cant get html to render but the rest works
 init();
