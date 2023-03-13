@@ -3,7 +3,11 @@ const index = require('../index');
 function generateHtml(employees) {
     let html = '';
     employees.forEach((teamMember) => {
-    if (teamMember.constructor.role === 'Manager') {
+      //console.log('teamMember: ', teamMember);
+      //console.log('Role: ', teamMember.constructor.role);
+      //console.log('Role: method - ', teamMember.getRole());
+
+    if (teamMember.getRole() === 'Manager') {
             html += 
   `<div class="card">
     <div class="card-title">${teamMember.getRole()}<br>${teamMember.getName()}</div>
@@ -15,7 +19,7 @@ function generateHtml(employees) {
     </div>`
       ;
 }
-    if (teamMember.constructor.role === 'Engineer') {
+    if (teamMember.getRole() === 'Engineer') {
     html += 
     `<div class="card">
     <div class="card-title">${teamMember.getRole()}<br>${teamMember.getName()}</div>
@@ -27,7 +31,7 @@ function generateHtml(employees) {
     </div>`
   ;
 } 
-    if (teamMember.constructor.role === 'Intern') {
+    if (teamMember.getRole() === 'Intern') {
     html += 
     `<div class="card">
     <div class="card-title">${teamMember.getRole()}<br>${teamMember.getName()}</div>
