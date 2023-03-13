@@ -26,7 +26,7 @@ function newEmployee() {
     } else if (data.role === 'Intern') {
         newIntern(data);
     } else if (data.role === 'Finish') {
-        console.log("Team: ", employees);
+        // console.log("Team: ", employees);
         assembleTeam((employees));
         return;
 }
@@ -58,8 +58,7 @@ function newEngineer() {
     ]) .then((data) => {
         const engineer = new Engineer(data.name, data.id, data.email, data.github);
         employees.push(engineer);
-        console.log("Team: ", employees)
-        // assembleTeam(JSON.stringify(employees));
+        // console.log("Team: ", employees)
         newEmployee();
     });
     };
@@ -90,8 +89,7 @@ function newIntern() {
     ]) .then((data) => {
         const intern = new Intern(data.name, data.id, data.email, data.school);
         employees.push(intern);
-        console.log("Team: ", employees)
-        // assembleTeam(JSON.stringify(employees));
+        // console.log("Team: ", employees)
         newEmployee();
         });
     };
@@ -121,8 +119,7 @@ function newManager() {
     ]) .then((data) => {
         const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
         employees.push(manager);
-        console.log("Team: ", employees);
-        // assembleTeam(JSON.stringify(employees));
+        // console.log("Team: ", employees);
         newEmployee();
         
     });
@@ -130,19 +127,7 @@ function newManager() {
 
 function assembleTeam() {
     fs.writeFileSync('./dist/output.html', generateHtml(employees), 'utf-8');
-    console.log("Team used to generate html:  ", JSON.stringify(employees));
+    // console.log("Team used to generate html:  ", JSON.stringify(employees));
 }
-    // console.log("Assembled Team: ", JSON.stringify(employees));
-    // const htmlPageContent = generateHTML(employees);
-    // console.log('html function output: ' + htmlPageContent)
-    // writeToFile('index.html', htmlPageContent);
 
-
-// function writeToFile(fileName, data) {
-//     fs.writeFile(fileName, data, (err) => 
-//         err ? console.log(err) : console.log('Successfully created HTML file!')
-//         )
-// }
-
-//TODO: cant get html to render but the rest works
 init();

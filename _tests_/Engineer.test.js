@@ -3,14 +3,35 @@ const Engineer = require("../lib/Engineer");
 
 // Test for the Engineer class
 describe('Engineer', () => {
-  describe('constructor', () => {
-    it('should create an instance of Engineer with a name, id, email, and github', () => {
-      const engineer = new Engineer('John Doe', 123, 'jdoe@example.com', 'johndoe');
+  describe('Engineer Object Instance', () => {
+      it('should create an object instance of Engineer', () => {
+      const engineer = new Engineer();
+      expect(typeof(engineer)).toBe('object');
+      });
 
-      expect(engineer.name).toBe('John Doe');
-      expect(engineer.id).toBe(123);
-      expect(engineer.email).toBe('jdoe@example.com');
-      expect(engineer.github).toBe('johndoe');
-    });
+      it('should create an Engineer name', () => {
+          const engineer = new Engineer('John Doe');
+          expect(engineer.name).toBe('John Doe');
+      });
+
+      it('should create an Engineer id', () => {
+          const engineer = new Engineer('John Doe', 123);
+          expect(engineer.id).toBe(123);
+      });
+
+      it('should create an Engineer email', () => {
+          const engineer = new Engineer('John Doe', 123, 'test@testemail.com');
+          expect(engineer.email).toBe('test@testemail.com');
+      });
+
+      it('should create an Engineer github', () => {
+        const engineer = new Engineer('John Doe', 123, 'test@testemail.com', 'github');
+        expect(engineer.github).toBe('github');
+      });
+
+      it('should create an Engineer role', () => {
+          const engineer = new Engineer('John Doe', 123, 'test@testemail.com', 'github', 'role');
+          expect(engineer.getRole()).toBe('Engineer');
+      });
   });
 });
