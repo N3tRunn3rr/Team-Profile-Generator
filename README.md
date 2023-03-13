@@ -189,5 +189,11 @@ You are required to submit the following for review:
 
 * The URL of the GitHub repository, with a unique name and a readme describing the project.
 
+## Walkthrough video link 
+* [Walkthrough](https://drive.google.com/file/d/1ABDojxc4qAj84j4SBgPf6q0y4rPhWN0L/view)
+
+## GitHub Repository link
+* [GitHub](https://github.com/N3tRunn3rr/Team-Profile-Generator)
+
 ---
 © 2022 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
